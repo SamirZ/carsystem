@@ -1,0 +1,13 @@
+{
+    "test":{
+        "PORT": 3000,
+        "MONGODB_URI": "mongodb://localhost:27017/rikidbTest",
+        "JWT_SECRET": "asdasfn3ji22u1yhxxndds"
+        
+    },  
+    "development":{
+        "PORT": 3000,
+        "MONGODB_URI": "mongodb://localhost:27017/rikidb",
+        "JWT_SECRET": "asd5213124312dsfsd0akas"
+    }
+}

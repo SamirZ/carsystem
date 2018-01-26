@@ -1,0 +1,37 @@
+.content-container {
+  margin: 0 auto;
+  padding: 0 $m-size;
+  max-width: 120rem;
+}
+
+.content-container-table {
+  margin: $l-size auto;
+  padding: 0 $m-size;
+  max-width: 120rem;
+}
+
+.cell-container {
+  padding: 0 $s-size;
+}
+
+.custom-modal {
+  min-width: 90%;
+}
+
+.block{
+  padding: $l-size 0;
+  text-align: center;
+  border: 1px solid $grey;
+  line-break: strict;
+  border-radius: 4px;
+}
+
+.selected-block{
+  color:  $off-white;
+  background-color: $blue;
+}
+
+.blocking-block{
+  color:  $off-white;
+  background-color: $red;
+}
