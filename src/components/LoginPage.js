@@ -15,9 +15,7 @@ class LoginPage extends React.Component{
   }
 
   componentWillMount(){
-    console.log('WILl MOUNT');
     const token = localStorage.getItem("token");
-    console.log(token);
     if(!!token){
       this.props.setToken(token);
     }
@@ -34,7 +32,6 @@ class LoginPage extends React.Component{
   };
 
   onSubmit = (e) => {
-    console.log("CLICKED");
     e.preventDefault();
 
     if (!this.state.email || !this.state.password) {

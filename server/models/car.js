@@ -19,10 +19,6 @@ var Car = mongoose.model('Car', {
         minlength: 1,
         trim: true
     },
-    free:{
-        type: Boolean,
-        required: true
-    },
     fuel:{
         type: Number,
         required: true
@@ -38,6 +34,7 @@ var Car = mongoose.model('Car', {
     },
     position: {
         type: Number,
+        unique: true,
         required: true 
     }
 });

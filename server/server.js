@@ -24,37 +24,38 @@ app.use(express.static(publicPath));
 var { Car } = require('./models/car');
 
 app.get('/cars', authenticate, (req, res, next) => {
-    Car.find((err, cars) => {
-    if (err) return next(err);
+    Car.find((e, cars) => {
+    if (e) return res.status(400).send();
     res.json(cars);
   });
 });
 
 app.get('/cars/:id', authenticate, (req, res, next) => {
-  Car.findById(req.params.id, (err, car) => {
-    if (err) return next(err);
+  Car.findById(req.params.id, (e, car) => {
+    if (e) return res.status(404).send();
     res.json(car);
   });
 });
 
 app.post('/cars', authenticate, (req, res, next) => {
-
-    Car.create(req.body, (err, car) => {
-        if (err) return next(err);
+    var body = _.pick(req.body, ['registration','model','category','fuel','kilometers','location','position']);
+    Car.create(body, (e, car) => {
+        if (e) return res.status(400).send();
         res.json(car);
     });
 });
 
 app.put('/cars/:id', authenticate, (req, res, next) => {
-  Car.findOneAndUpdate(req.params.id, req.body, (err, car) => {
-    if (err) return next(err);
+    var body = _.pick(req.body, ['registration','model','category','fuel','kilometers','location','position']);
+  Car.findOneAndUpdate(req.params.id, body, (e, car) => {
+    if (e) return res.status(400).send();
         res.json(car);
   });
 });
 
 app.patch('/cars/:id', authenticate, (req, res)=>{
     var id = req.params.id;
-    var body = _.pick(req.body, ['fuel','kilometers','location','free']);
+    var body = _.pick(req.body, ['registration','model','category','fuel','kilometers','location','position']);
 
     if(!ObjectID.isValid(id)){
         return res.status(404).send();
@@ -73,8 +74,8 @@ app.patch('/cars/:id', authenticate, (req, res)=>{
 });
 
 app.delete('/cars/:id', authenticate, function(req, res, next) {
-    Car.findByIdAndRemove(req.params.id, req.body, function (err, car) {
-        if (err) return next(err);
+    Car.findByIdAndRemove(req.params.id, function (e, car) {
+        if (e) return res.status(400).send();
         res.json(car);
     });
 });

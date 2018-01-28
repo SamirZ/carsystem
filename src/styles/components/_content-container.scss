@@ -21,17 +21,26 @@
 .block{
   padding: $l-size 0;
   text-align: center;
+  word-wrap: break-word;
   border: 1px solid $grey;
-  line-break: strict;
   border-radius: 4px;
+  // @media (max-width: $desktop-breakpoint) {
+  //   word-break: break-all;
+  // }
+
+}
+//style={{minHeight: '150px', maxHeight: '150px', margin: '2px'}}
+
+.block-empty{
+  color: white; 
 }
 
 .selected-block{
-  color:  $off-white;
+  color: $off-white;
   background-color: $blue;
 }
 
 .blocking-block{
-  color:  $off-white;
+  color: $off-white;
   background-color: $red;
 }

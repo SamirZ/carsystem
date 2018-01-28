@@ -17,14 +17,14 @@ class Header extends React.Component{
 
   handleAdd =() =>{
     const car = {
+      position: findDOMNode(this.refs.position).value,
       registration: findDOMNode(this.refs.registration).value,
       model: findDOMNode(this.refs.model).value,
       category: findDOMNode(this.refs.category).value,
       fuel: findDOMNode(this.refs.fuel).value,
       kilometers: findDOMNode(this.refs.kilometers).value,
       location: findDOMNode(this.refs.location).value,
-      free: true,
-      position: this.props.cars.length==0 ? 1 : this.props.cars.length+1
+      free: true
     };
     console.log("Car to add: ",car);
     this.props.postCar(this.props.token, car);
@@ -67,6 +67,10 @@ class Header extends React.Component{
 					</Modal.Header>
           <Modal.Body>
           
+          <FormGroup controlId="position">
+            <ControlLabel>Position</ControlLabel>
+            <FormControl type="number" min="1" placeholder="Enter Position" ref="position" />
+          </FormGroup>
           <FormGroup controlId="registration">
             <ControlLabel>Registration</ControlLabel>
             <FormControl type="text" placeholder="Enter Registration" ref="registration" />
@@ -81,11 +85,11 @@ class Header extends React.Component{
           </FormGroup>
           <FormGroup controlId="fuel">
             <ControlLabel>Fuel Amount</ControlLabel>
-            <FormControl type="text" placeholder="Enter Fuel Amount" ref="fuel" />
+            <FormControl type="number" min="0" placeholder="Enter Fuel Amount" ref="fuel" />
           </FormGroup>
           <FormGroup controlId="kilometers">
             <ControlLabel>Kilometers</ControlLabel>
-            <FormControl type="text" placeholder="Enter Kilometers" ref="kilometers" />
+            <FormControl type="number" min="0" placeholder="Enter Kilometers" ref="kilometers" />
           </FormGroup>
           <FormGroup controlId="location">
             <ControlLabel>Location</ControlLabel>

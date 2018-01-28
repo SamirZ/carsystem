@@ -15,9 +15,9 @@ class DashboardPage extends React.Component{
         showModal: false,
         showPosition: false,
         showDelete: false,
-        selected: -1,
         car: {},
-        carsList: []
+        highestPosition: 0,
+        boxesList: []
     }
   } 
 
@@ -42,6 +42,7 @@ class DashboardPage extends React.Component{
   handleEdit = () =>{
     this.props.patchCar(this.props.token,this.state.car._id,this.state.car);
     this.handleHide();
+    this.createBoxesList();
   }
 
   handleDelete = () =>{
@@ -51,10 +52,11 @@ class DashboardPage extends React.Component{
 
   handleView = (index) =>{
     const currentCar = this.props.cars[index];
+    const highestPosition = Math.max.apply(Math,this.props.cars.map(function(o){return o.position;}));
     this.setState({
         showPosition: true,
         car: currentCar,
-        selected: currentCar.position
+        highestPosition
     });
   }
 
@@ -77,6 +79,31 @@ class DashboardPage extends React.Component{
 
   componentWillMount(){
     this.props.getCars(this.props.token);
+    this.createBoxesList();
+  }
+
+  positionChange = (e) => {
+    const newCar = this.state.car;
+    newCar.position = e.target.value;
+    this.setState({newCar})
+  }
+
+  registrationChange = (e) => {
+    const newCar = this.state.car;
+    newCar.registration = e.target.value;
+    this.setState({newCar})
+  }
+
+  modelChange = (e) => {
+    const newCar = this.state.car;
+    newCar.model = e.target.value;
+    this.setState({newCar})
+  }
+
+  categoryChange = (e) => {
+    const newCar = this.state.car;
+    newCar.category = e.target.value;
+    this.setState({newCar})
   }
 
   fuelChange = (e) => {
@@ -97,11 +124,42 @@ class DashboardPage extends React.Component{
     this.setState({newCar})
   }
 
-  freeChange = (e) => {
-    const newCar = this.state.car;
-    newCar.free = e.target.value;
-    this.setState({newCar})
+  createBoxesList = () =>{
+    let boxesList = [];
+    const greaterThis = this;
+    if(!!this.props.cars){
+      for (let index = 0; index < this.state.highestPosition; index++) {
+        boxesList.push(
+          <Col style={{minHeight: '150px',maxHeight: '150px', minWidth: '50px', maxWidth:'100px'}} className="block block-empty" xs={1} sm={1} md={1} lg={1} key={index}>
+            <p> - </p>
+            <p>Empty Slot</p>
+          </Col>);
+      }
+      this.props.cars.map(function(car){
+        if(car){
+        
+          if(greaterThis.state.car._id == car._id){
+            boxesList[car.position-1] = (<Col style={{minHeight: '150px',maxHeight: '150px', minWidth: '50px', maxWidth:'100px'}} className="block selected-block" xs={1} sm={1} md={1} lg={1} key={car._id}>
+                      <p>{car.position}</p><p>{car.model}</p>
+                    </Col>);
+          } else {
+            boxesList[car.position-1] =  (<Col style={{minHeight: '150px',maxHeight: '150px', minWidth: '50px', maxWidth:'100px'}} className="block" xs={1} sm={1} md={1} lg={1} key={car._id}>
+                    <p>{car.position}</p><p>{car.model}</p>
+                  </Col>);
+          }
+          for (let index = greaterThis.state.car.position; index < greaterThis.state.highestPosition; index+=12) {
+            if(Number(index)+12 == car.position){
+              boxesList[car.position-1] =  (<Col style={{minHeight: '150px',maxHeight: '150px', minWidth: '50px', maxWidth:'100px'}} className="block blocking-block" xs={1} sm={1} md={1} lg={1} key={car._id}>
+                        <p>{car.position}</p><p>{car.model}</p>
+                      </Col>);
+            }
+          }
+        }
+      });
+    }
+    return boxesList;
   }
+
 
 
   columns = [{
@@ -137,28 +195,7 @@ class DashboardPage extends React.Component{
   
 
   render() { 
-    let carsList = false;
-    const greaterThis = this;
-    if(!!this.props.cars){
-      carsList = this.props.cars.map(function(car){
-        if(car){
-        if(greaterThis.state.car._id == car._id){
-          return (<Col className="block selected-block" xs={1} sm={1} md={1} lg={1} key={car._id}>
-                    <p>{car.position}</p><p>{car.model}</p>
-                  </Col>);
-        }
-        for (let index = greaterThis.state.car.position; index < greaterThis.props.cars.length; index+=12) {
-          if(Number(index)+12 == car.position){
-            return (<Col className="block blocking-block" xs={1} sm={1} md={1} lg={1} key={car._id}>
-                      <p>{car.position}</p><p>{car.model}</p>
-                    </Col>);
-          }
-        }
-        return (<Col className="block" xs={1} sm={1} md={1} lg={1} key={car._id}>
-                  <p>{car.position}</p><p>{car.model}</p>
-                </Col>);
-      }});
-    }
+
     return (
       <div>
       <ReactTable
@@ -181,6 +218,22 @@ class DashboardPage extends React.Component{
 					</Modal.Header>
           <Modal.Body>
           
+          <FormGroup controlId="position">
+            <ControlLabel>Position</ControlLabel>
+            <FormControl type="number" min="1" placeholder="Enter Position" value={this.state.car.position} onChange={this.positionChange} ref="position" />
+          </FormGroup>
+          <FormGroup controlId="registration">
+            <ControlLabel>Registration</ControlLabel>
+            <FormControl type="text" placeholder="Enter Registration" value={this.state.car.registration} onChange={this.registrationChange} ref="registration" />
+          </FormGroup>
+          <FormGroup controlId="model">
+            <ControlLabel>Model</ControlLabel>
+            <FormControl type="text" placeholder="Enter Model" value={this.state.car.model} onChange={this.modelChange} ref="model" />
+          </FormGroup>
+          <FormGroup controlId="category">
+            <ControlLabel>Category</ControlLabel>
+            <FormControl type="text" placeholder="Enter Category" value={this.state.car.category} onChange={this.categoryChange} ref="category" />
+          </FormGroup>
             <FormGroup controlId="fuel">
               <ControlLabel>Fuel Amount</ControlLabel>
               <FormControl type="text" placeholder="Enter Fuel Amount" value={this.state.car.fuel} onChange={this.fuelChange} ref="fuel" />
@@ -193,9 +246,7 @@ class DashboardPage extends React.Component{
               <ControlLabel>Location</ControlLabel>
               <FormControl type="text" placeholder="Enter Location" value={this.state.car.location} onChange={this.locationChange} ref="location" />
             </FormGroup>
-            <Checkbox value={this.state.car.free} onChange={this.freeChange} >
-              Occupied
-            </Checkbox>
+
 					</Modal.Body>
           <Modal.Footer>
             <Button className="button" onClick={this.handleEdit}>Save</Button>
@@ -209,7 +260,7 @@ class DashboardPage extends React.Component{
 					</Modal.Header>
           <Modal.Body>
             <Grid>
-              {carsList}
+              {this.createBoxesList()}
             </Grid>
 					</Modal.Body>
           <Modal.Footer>
