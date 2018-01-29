@@ -16,21 +16,17 @@ var Car = mongoose.model('Car', {
     category:{
         type: String,
         required: true,
-        minlength: 1,
-        trim: true
+        minlength: 1
     },
     fuel:{
-        type: Number,
-        required: true
+        type: Number
     },
     kilometers:{
-        type: Number,
-        required: true
+        type: Number
     },
     location: {
         type: String,
-        minlength: 1,
-        required: true
+        minlength: 1
     },
     position: {
         type: Number,

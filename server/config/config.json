@@ -7,7 +7,7 @@
     },  
     "development":{
         "PORT": 3000,
-        "MONGODB_URI": "mongodb://localhost:27017/rikidb",
+        "MONGODB_URI": "mongodb://SamirZ:panduri1@ds053140.mlab.com:53140/heroku_86vp79q7",
         "JWT_SECRET": "asd5213124312dsfsd0akas"
     }
 }

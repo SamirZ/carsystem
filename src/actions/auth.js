@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const startLogin = (user) =>{
     return function(dispatch){
-        console.log(user);
         axios.post("/users/login", user)
             .then(function(response){
                 console.log(response);
