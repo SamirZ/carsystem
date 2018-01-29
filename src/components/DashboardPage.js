@@ -140,17 +140,17 @@ class DashboardPage extends React.Component{
         
           if(greaterThis.state.car._id == car._id){
             boxesList[car.position-1] = (<Col style={{minHeight: '150px',maxHeight: '150px', minWidth: '50px', maxWidth:'100px'}} className="block selected-block" xs={1} sm={1} md={1} lg={1} key={car._id}>
-                      <p>{car.position}</p><p>{car.model}</p>
+                      <p>{car.position}</p><p>{car.registration}</p>
                     </Col>);
           } else {
             boxesList[car.position-1] =  (<Col style={{minHeight: '150px',maxHeight: '150px', minWidth: '50px', maxWidth:'100px'}} className="block" xs={1} sm={1} md={1} lg={1} key={car._id}>
-                    <p>{car.position}</p><p>{car.model}</p>
+                    <p>{car.position}</p><p>{car.registration}</p>
                   </Col>);
           }
           for (let index = greaterThis.state.car.position; index < greaterThis.state.highestPosition; index+=12) {
             if(Number(index)+12 == car.position){
               boxesList[car.position-1] =  (<Col style={{minHeight: '150px',maxHeight: '150px', minWidth: '50px', maxWidth:'100px'}} className="block blocking-block" xs={1} sm={1} md={1} lg={1} key={car._id}>
-                        <p>{car.position}</p><p>{car.model}</p>
+                        <p>{car.position}</p><p>{car.registration}</p>
                       </Col>);
             }
           }
